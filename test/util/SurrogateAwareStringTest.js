@@ -40,8 +40,8 @@ describe("SurrogateAwareString", function () {
         expect(str.charAt(2)).to.eql("屋");
     });
     it("charCodeAt", function () {
-        var str = new SurrogateAwareString("𠮷野屋");  // target object
-        expect(str.charCodeAt(0)).to.eql(0x20bb7);
+        var str = new SurrogateAwareString("𝟒野屋");  // target object
+        expect(str.charCodeAt(0)).to.eql('𝟒'.charCodeAt(0));
         expect(str.charCodeAt(1)).to.eql("野".charCodeAt(0));
         expect(str.charCodeAt(2)).to.eql("屋".charCodeAt(0));
     });

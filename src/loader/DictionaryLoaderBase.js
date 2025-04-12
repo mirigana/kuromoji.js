@@ -16,7 +16,6 @@
  */
 
 
-const nodeUrl = require('url');
 const DynamicDictionaries = require('../dict/DynamicDictionaries');
 
 
@@ -37,11 +36,9 @@ class DictionaryLoaderBase {
 
   loadFiles(files) {
     const { dic_path } = this;
-
-    return Promise.all(files.map((file) => {
-      const url = nodeUrl.resolve(dic_path, file);
-      return this.loadArrayBuffer(url);
-    }));
+    return Promise.all(
+      files.map((file) => this.loadArrayBuffer(file, dic_path)),
+    );
   }
 
   loadTrie() {

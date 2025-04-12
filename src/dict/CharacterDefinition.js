@@ -18,7 +18,6 @@
 
 const InvokeDefinitionMap = require('./InvokeDefinitionMap');
 const CharacterClass = require('./CharacterClass');
-const SurrogateAwareString = require('../util/SurrogateAwareString');
 
 const DEFAULT_CATEGORY = 'DEFAULT';
 
@@ -135,7 +134,9 @@ class CharacterDefinition {
   lookup(ch) {
     let class_id;
     const code = ch.charCodeAt(0);
-    if (SurrogateAwareString.isSurrogatePair(ch)) {
+
+    // when ch is UTF16, the length will be 2
+    if (ch.length !== 1) {
       // Surrogate pair character codes can not be defined by char.def, so set DEFAULT category
       class_id = this.invoke_definition_map.lookup(DEFAULT_CATEGORY);
     } else if (code < this.character_category_map.length) {

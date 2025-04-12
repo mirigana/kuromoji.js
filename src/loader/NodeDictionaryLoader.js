@@ -17,6 +17,7 @@
 
 
 const fs = require('fs');
+const nodeUrl = require('url');
 const DictionaryLoaderBase = require('./DictionaryLoaderBase');
 
 
@@ -26,9 +27,10 @@ class NodeDictionaryLoader extends DictionaryLoaderBase {
    * @param {string} file Dictionary file path
    */
   // eslint-disable-next-line class-methods-use-this
-  loadArrayBuffer(file) {
+  loadArrayBuffer(file, basePath) {
+    const url = nodeUrl.resolve(basePath, file);
     return new Promise((resolve, reject) => {
-      fs.readFile(file, (err, buffer) => {
+      fs.readFile(url, (err, buffer) => {
         if (err) {
           return reject(err);
         }

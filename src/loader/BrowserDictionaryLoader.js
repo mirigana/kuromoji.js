@@ -24,7 +24,11 @@ class BrowserDictionaryLoader extends DictionaryLoaderBase {
    * @param {string} url Dictionary URL
    */
   // eslint-disable-next-line class-methods-use-this
-  loadArrayBuffer(url) {
+  loadArrayBuffer(file, basePath) {
+    // TODO
+    // resolve both absolute and relative bathPath of a url
+    // not just concatenate 2 strings
+    const url = `${basePath}${file}`;
     return fetch(url).then((res) => res.arrayBuffer());
   }
 }

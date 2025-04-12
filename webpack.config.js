@@ -7,7 +7,6 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'kuromoji.js',
     library: 'kuromoji',
-    libraryTarget: 'window',
   },
   resolve: {
     alias: {
