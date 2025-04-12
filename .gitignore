@@ -2,5 +2,5 @@ node_modules/
 .cache/
 
 legacy/
-dist/
-dict/
+/dist/
+/dict/
