@@ -25,6 +25,12 @@ const maskUslessFeatures = (line) => {
   return line;
 
   // clear the usless features, it can reduce about 20% of the dict files
+  // **
+  // considerate the usage of token rules
+  // when overwrite the below token parts
+  // some rule rely the partiular properties
+  // **
+
   const parts = line.split(',');
 
   // const pos = parts[4];
