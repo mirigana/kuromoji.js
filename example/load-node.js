@@ -19,9 +19,15 @@ const kuromoji = require('../src/kuromoji');
 
 const DIC_DIR = 'dict';
 
+// node --inspect-brk example/load-node.js
+
+let text = '！。！天才てれびくんを見た時かな。しゅごキャラ！を見た時かな。リルぷりっ♪を見た時かな。とにかく昔から歌と踊りと、なにかを生み出すことが好きだったんだ〜。誰にも見せないのに、曲を作ったり詞を作ったり。振り付けを作ったりセリフを作ったり。小説を書いたり漫画を描いたり。世の中の「創作」と呼ばれるものは一通りやってきた気がする。つくるの、大好き。アイドルになって、自分で作った歌を披露させていただける機会があってうれしかった。これはデビュー前から言い続けていることなのですが、いつかグループの曲を作ったり、歌詞を書いたり、振り付けをしたり、なんだり、してみたいなのきもちです。';
+text = '⌒+。本日';
+// text = '本日\n\n7/4(金)';
+
 // Load dictionaries from file, and prepare tokenizer
 kuromoji.builder({ dicPath: DIC_DIR }).build().then((tokenizer) => {
-  const path = tokenizer.tokenize('すもももももももものうち');
+  const path = tokenizer.tokenize(text);
   console.log(path);
   module.exports = tokenizer;
 });

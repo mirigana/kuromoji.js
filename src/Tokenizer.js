@@ -54,8 +54,9 @@ class Tokenizer {
   tokenizeForSentence(sentence, tokens = []) {
     const lattice = this.getLattice(sentence);
     const best_path = this.viterbi_searcher.search(lattice);
-    const last_pos = (tokens.length)
-      ? tokens[tokens.length - 1].word_position
+    const last_token = tokens[tokens.length - 1];
+    const initial_pos = last_token
+      ? last_token.word_position + last_token.surface_form.length - 1
       : 0;
 
     best_path.forEach((node) => {
@@ -72,9 +73,9 @@ class Tokenizer {
 
         token = this.formatter.formatEntry(
           node.name,
-          last_pos + node.start_pos,
+          initial_pos + node.start_pos,
           node.type,
-          features
+          features,
         );
       } else if (node.type === 'UNKNOWN') {
         // Unknown word
@@ -83,14 +84,14 @@ class Tokenizer {
 
         token = this.formatter.formatUnknownEntry(
           node.name,
-          last_pos + node.start_pos,
+          initial_pos + node.start_pos,
           node.type,
           features,
-          node.surface_form
+          node.surface_form,
         );
       } else {
         // TODO User dictionary
-        token = this.formatter.formatEntry(node.name, last_pos + node.start_pos, node.type, []);
+        token = this.formatter.formatEntry(node.name, initial_pos + node.start_pos, node.type, []);
       }
 
       tokens.push(token);
