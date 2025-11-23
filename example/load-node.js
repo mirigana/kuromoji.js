@@ -21,13 +21,37 @@ const DIC_DIR = 'dict';
 
 // node --inspect-brk example/load-node.js
 
-let text = '！。！天才てれびくんを見た時かな。しゅごキャラ！を見た時かな。リルぷりっ♪を見た時かな。とにかく昔から歌と踊りと、なにかを生み出すことが好きだったんだ〜。誰にも見せないのに、曲を作ったり詞を作ったり。振り付けを作ったりセリフを作ったり。小説を書いたり漫画を描いたり。世の中の「創作」と呼ばれるものは一通りやってきた気がする。つくるの、大好き。アイドルになって、自分で作った歌を披露させていただける機会があってうれしかった。これはデビュー前から言い続けていることなのですが、いつかグループの曲を作ったり、歌詞を書いたり、振り付けをしたり、なんだり、してみたいなのきもちです。';
-text = '⌒+。本日';
+let text = '公式アカウント錬成企画\n\n【TCHOTCHKEにまつわるQ&A】\n\nリプの応酬が白熱してるアカウントがインプ伸びると聞いたもので。TRIPもないので今週、試験的に本投稿へのリプライというカタチで頂戴した質問にぽつぽつ答えてみたいと思います。\n\nいい塩梅でお願いし〼。\n（urlも貼らない施策）';
 // text = '本日\n\n7/4(金)';
 
 // Load dictionaries from file, and prepare tokenizer
 kuromoji.builder({ dicPath: DIC_DIR }).build().then((tokenizer) => {
   const path = tokenizer.tokenize(text);
-  console.log(path);
+  // console.log(path);
+
+  // build resut test
+  const kataToHira = (str = '') => str.replace(/[\u30a1-\u30f6]/g, (match) => {
+    const chr = match.charCodeAt(0) - 0x60;
+    return String.fromCharCode(chr);
+  });
+
+  const pured = path
+    .filter((t) => /[\u4E00-\u9FFF]/.test(t.surface_form))
+    .filter((t) => t.reading)
+    .map((t) => ({
+      s: t.surface_form,
+      r: kataToHira(t.reading),
+      p: t.word_position - 1,
+    }));
+
+  const textArray = text.split('');
+
+  pured.forEach((p) => {
+    console.log(p);
+    textArray[p.p + (p.s.length - 1)] += `(${p.r})`;
+  });
+
+  console.log(textArray.join(''));
+
   module.exports = tokenizer;
 });
